@@ -1,7 +1,7 @@
 import { uriToPrefix, prefixToUri } from '../lib';
 
-function contextResponse(pref: string, url: string) {
-  return new Response(`{ "@context": { "${pref}": "${url}" } }`);
+function contextResponse(pref: string, url: string): any {
+  return { json: () => ({ '@context': { [pref]: url } }) };
 }
 
 async function fetchFn(...args: Parameters<typeof fetch>): ReturnType<typeof fetch> {
@@ -11,10 +11,10 @@ async function fetchFn(...args: Parameters<typeof fetch>): ReturnType<typeof fet
       return contextResponse('foaf', 'http://xmlns.com/foaf/0.1/');
     case 'https://prefix.cc/reverse?uri=https%3A%2F%2Fwww.my-url%2Fetad%2F&format=jsonld':
     case 'https://prefix.cc/bs.file.jsonld':
-      return new Response('<!doctype html></html>');
+      return { json: () => { throw new Error('cannot convert to json'); } } as any;
     case 'https://prefix.cc/reverse?uri=https%3A%2F%2Fwww.my-url%2Fno-context%2F&format=jsonld':
     case 'https://prefix.cc/empty.file.jsonld':
-      return new Response('{ "@context": { } }');
+      return { json: () => ({ '@context': {} }) } as any;
     default:
       throw new Error(`Unexpected URL ${args[0]}`);
   }
