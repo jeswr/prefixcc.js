@@ -1,20 +1,49 @@
-# template-typescript
-Template repo for my Typescript projects
-[![GitHub license](https://img.shields.io/github/license/jeswr/useState.svg)](https://github.com/jeswr/useState/blob/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/@jeswr/use-state.svg)](https://www.npmjs.com/package/@jeswr/use-state)
-[![build](https://img.shields.io/github/workflow/status/jeswr/useState/Node.js%20CI)](https://github.com/jeswr/useState/tree/main/)
+#  prefixcc
+
+Get prefixes for your URIs using the [prefix.cc](http://prefix.cc/) Web API.
+
+[![GitHub license](https://img.shields.io/github/license/jeswr/useState.svg)](https://github.com/jeswr/prefixcc.js/blob/master/LICENSE)
+[![npm version](https://img.shields.io/npm/v/prefixcc.svg)](https://www.npmjs.com/package/prefixcc)
+[![build](https://img.shields.io/github/workflow/status/jeswr/prefixcc/Node.js%20CI)](https://github.com/jeswr/prefixcc/tree/main/)
 [![Dependabot](https://badgen.net/badge/Dependabot/enabled/green?icon=dependabot)](https://dependabot.com/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## Usage
-When this repository is used as a template, you will need to do the following:
- - Provide secrets tokens for github (`GH_TOKEN`) and NPM (`NPM_TOKEN`)
-   NPM tokens (`NPM_TOKEN`) should be automation tokens generated at https://www.npmjs.com/settings/[user]/tokens/
-   Github tokens (`GH_TOKEN`) should be generated at https://github.com/settings/tokens/new?scopes=repo
-   Secrets should be added at https://github.com/jeswr/[repository-name]/settings/secrets/actions
- - Fill in missing entries in the package.json
+
+Primarily this library can be used to look up common prefixes for a given URI, and also look up the URI most commonly associated with a prefix.
+
+```ts
+import { uriToPrefix, prefixToUri } from 'prefixcc';
+
+const prefix = await uriToPrefix('http://xmlns.com/foaf/0.1/'); // foaf
+const url = await prefixToUri('foaf'); // http://xmlns.com/foaf/0.1/
+```
+
+It can also mint new prefixes when there are no recommended ones available
+
+```ts
+await uriToPrefix('https://www.my-url/etad/', { mintOnUnknown: true }); // etad
+```
+
+and ensure that prefixes are unique from those that you're already using
+
+```ts
+await uriToPrefix(
+  'https://www.my-url-2/etad/', {
+    mintOnUnknown: true,
+    existingPrefixes: { etad: 'https://www.my-url/etad/' }
+}); // etad0
+
+await uriToPrefix(
+  'http://xmlns.com/foaf/0.1/', {
+    existingPrefixes: { foaf: 'https://www.my-url/' }
+}); // foaf0
+```
+
+
+
 
 ## License
-©2021–present
+©2022–present
 [Jesse Wright](https://github.com/jeswr),
 [MIT License](https://github.com/jeswr/useState/blob/master/LICENSE).
