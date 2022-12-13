@@ -1,5 +1,5 @@
 {
-  "name": "prefixcc",
+  "name": "@jeswr/prefixcc",
   "version": "0.0.0-development",
   "description": "A utility library to lookup prefixes and uris on prefixcc",
   "main": "dist/index.js",
