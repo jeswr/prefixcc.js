@@ -40,9 +40,6 @@ await uriToPrefix(
 }); // foaf0
 ```
 
-
-
-
 ## License
 ©2022–present
 [Jesse Wright](https://github.com/jeswr),
