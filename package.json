@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "prefixcc",
   "version": "0.0.0-development",
-  "description": "",
+  "description": "A utility library to lookup prefixes and uris on prefixcc",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
   "directories": {
@@ -22,15 +22,22 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/jeswr/prefixcc.js"
   },
-  "keywords": [],
+  "keywords": [
+    "prefix",
+    "prefix.cc",
+    "RDF",
+    "prefixes",
+    "URI",
+    "Solid"
+  ],
   "author": "Jesse Wright <jesse.wright@anu.edu.au>",
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/jeswr/prefixcc.js/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/jeswr/prefixcc.js#readme",
   "devDependencies": {
     "@types/jest": "^29.2.4",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
@@ -86,5 +93,8 @@
   },
   "dependencies": {
     "cross-fetch": "^3.1.5"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
