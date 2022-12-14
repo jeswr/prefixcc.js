@@ -13,7 +13,7 @@ Get prefixes for your URIs using the [prefix.cc](http://prefix.cc/) Web API.
 Primarily this library can be used to look up common prefixes for a given URI, and also look up the URI most commonly associated with a prefix.
 
 ```ts
-import { uriToPrefix, prefixToUri, lookupAllPrefixes } from 'prefixcc'
+import { uriToPrefix, prefixToUri, lookupAllPrefixes } from '@jeswr/prefixcc'
 
 const prefix = await uriToPrefix('http://xmlns.com/foaf/0.1/'); // foaf
 const url = await prefixToUri('foaf');                          // http://xmlns.com/foaf/0.1/
