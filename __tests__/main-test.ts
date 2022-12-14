@@ -1,8 +1,10 @@
-import { uriToPrefix, prefixToUri } from '../lib';
+import { uriToPrefix, prefixToUri, lookupAllPrefixes } from '../lib';
 
 function contextResponse(pref: string, url: string): any {
   return { json: () => ({ '@context': { [pref]: url } }) };
 }
+
+const allPref = { a: 'http://example.org/a', b: 'http://example.org/b' };
 
 async function fetchFn(...args: Parameters<typeof fetch>): ReturnType<typeof fetch> {
   switch (`${args[0]}`) {
@@ -15,6 +17,8 @@ async function fetchFn(...args: Parameters<typeof fetch>): ReturnType<typeof fet
     case 'https://prefix.cc/reverse?uri=https%3A%2F%2Fwww.my-url%2Fno-context%2F&format=jsonld':
     case 'https://prefix.cc/empty.file.jsonld':
       return { json: () => ({ '@context': {} }) } as any;
+    case 'https://prefix.cc/context':
+      return { json: () => ({ '@context': allPref }) } as any;
     default:
       throw new Error(`Unexpected URL ${args[0]}`);
   }
@@ -123,5 +127,10 @@ describe('prefixToUri', () => {
     expect(
       prefixToUri('empty'),
     ).resolves.toBeUndefined();
+  });
+
+  describe('lookupAllPrefixes', () => {
+    expect(lookupAllPrefixes()).resolves.toEqual(allPref);
+    expect(lookupAllPrefixes({ fetch: fetchFn })).resolves.toEqual(allPref);
   });
 });
