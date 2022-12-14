@@ -69,3 +69,5 @@ export async function prefixToUri(prefix: string, options?: { fetch?: typeof fet
     return undefined;
   }
 }
+
+export { lookupAllPrefixes } from './lookup';

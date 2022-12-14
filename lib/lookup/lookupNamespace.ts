@@ -1,5 +1,4 @@
-// TODO: Use universal fetch here
-import { fetch } from 'cross-fetch';
+import { fetchContext, OptionalFetch } from './fetchContext';
 
 /**
  * Use prefix.cc to look up the namespace associated with a given prefix.
@@ -8,13 +7,8 @@ import { fetch } from 'cross-fetch';
  * @param prefix The prefix of which to obtain the namespace
  * @param options Optional fetch function to use
  */
-export async function lookupUri(prefix: string, options?: { fetch?: typeof fetch }): Promise<string> {
-  // Select the correct fetch function
-  const fetchFn = options?.fetch ?? fetch;
-
-  const res = await (await fetchFn(`https://prefix.cc/${prefix}.file.jsonld`)).json();
-
-  const uri = res['@context'][prefix];
+export async function lookupUri(prefix: string, options?: OptionalFetch): Promise<string> {
+  const uri = (await fetchContext(`https://prefix.cc/${prefix}.file.jsonld`, options))[prefix];
 
   if (typeof uri !== 'string') {
     throw new Error(`Expected uri to be a string, received: ${uri} of type ${typeof uri}`);
